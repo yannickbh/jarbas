@@ -1,1 +1,23 @@
-.gitignore
+# development environment
+.coverage
+.env
+.floo
+*.sqlite3
+
+# cache, compiled & downloaded files
+*.pyc
+.webassets-cache/
+__pycache__/
+app.css
+app.js
+ceap-datasets.html
+elm-stuff/
+node_modules/
+staticfiles/
+
+# ansible
+contrib/ansible/*.retry
+contrib/ansible/hosts
+contrib/ansible/vars.yml
+contrib/ansible/gunicorn.conf
+contrib/ansible/nginx.conf

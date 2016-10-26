@@ -1,0 +1,91 @@
+---
+- hosts: virtualbox
+  become: true
+  vars_files: 
+   - vars.yml
+  tasks:
+  
+  # Pull source.
+
+  - name: Pull sources from the repository.
+    git:
+      repo: "{{ project_repo }}"
+      dest: "{{ project_root }}"
+      version: "{{ branch }}"
+      accept_hostkey: True
+      force: yes
+
+  # Install Node packages
+   
+  - name: Change permissions.
+    file:
+      dest: "{{ project_home }}"
+      owner: "{{ deploy_user }}"
+      group:  "{{ deploy_user }}"
+      recurse: yes
+
+  - name: Install Node packages required by the project.
+    become_user:  "{{ deploy_user }}"
+    npm:
+      path: "{{ project_root }}"
+
+  # Install Python packages
+
+  - name: Update virtualenv pip.
+    pip:
+      name: pip
+      extra_args: '-U'
+      virtualenv: "{{ virtualenv_directory }}"
+
+  - name: Install Python packages required by the project.
+    pip:
+      requirements: "{{ project_root }}/requirements.txt"
+      virtualenv: "{{ virtualenv_directory }}"
+
+  # Migrate database
+
+  - name: Migrate database.
+    environment: "{{ envvars }}"
+    django_manage:
+      command: migrate
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"
+
+  # Generate static files
+  
+  - name: Download CEAP dataset description.
+    environment: "{{ envvars }}"
+    django_manage:
+      command: ceapdatasets
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"
+  
+  - name: Compile assets.
+    environment: "{{ envvars }}"
+    django_manage:
+      app_path: "{{ project_root }}"
+      command: "assets build --no-cache"
+      virtualenv: "{{ virtualenv_directory }}"
+
+  - name: Collect static files.
+    environment: "{{ envvars }}"
+    django_manage:
+      app_path: "{{ project_root }}"
+      command: collectstatic
+      virtualenv: "{{ virtualenv_directory }}"
+
+  # Start gunicorn
+
+  - name: Restart supervisor.
+    become_user: root
+    service:
+      name: supervisor
+      state: restarted
+
+  # Restart nginx
+
+  - name: Restart nginx.
+    become_user: root
+    service:
+      name: nginx
+      state: restarted

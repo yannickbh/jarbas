@@ -1,0 +1,22 @@
+---
+project_name: <project name>
+project_home: <home directory>
+project_root: <project root directory>
+virtualenv_directory: <virtualenv directory>
+
+project_repo: git@github.com:datasciencebr/jarbas.git
+private_key_github: <your home directory>/.ssh/id_rsa
+public_key_github: <your home directory>/.ssh/id_rsa.pub
+
+deploy_user: jarbas
+database_password: <database password>
+
+envvars:
+  - ALLOWED_HOSTS: <sub/domain and/or ip>
+    AMAZON_S3_BUCKET: <amacon s3 bucket name>
+    AMAZON_S3_DATASET_DATE: "<amacon s3 bucket dataset date>"
+    AMAZON_S3_REGION: <amacon s3 bucket region>
+    DATABASE_URL: postgres://<database user>:<database password>@localhost/<database name>
+    ELM_MAKE_BIN: <path to project root>/node_modules/.bin/elm-make
+    SECRET_KEY: <secret key>
+

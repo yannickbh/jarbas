@@ -1,0 +1,23 @@
+---
+- hosts: virtualbox
+  become: true
+  vars_files: 
+   - vars.yml
+
+  tasks:
+  
+  # Seed the database
+  
+  - name: Load CEAP dataset (this takes time — there are more than 2 million records).
+    environment: "{{ envvars }}"
+    django_manage:
+      command: "loaddatasets --drop-all"
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"
+  
+  - name: Load suppliers (this takes time — there are more than 60 thousand records).
+    environment: "{{ envvars }}"
+    django_manage:
+      command: "loadsuppliers --drop-all"
+      app_path: "{{ project_root }}"
+      virtualenv: "{{ virtualenv_directory }}"

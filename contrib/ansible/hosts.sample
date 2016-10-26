@@ -1,0 +1,2 @@
+[name your server]
+vm01 ansible_port=22 ansible_ssh_host=<server ip> branch=master ansible_ssh_pass=<user password> ansible_ssh_user=<user name>
