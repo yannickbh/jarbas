@@ -1,5 +1,6 @@
 version: '2'
 services:
+
   jarbas:
     build:
       context: .
@@ -29,14 +30,15 @@ services:
       dockerfile: Dockerfile-elm
     volumes:
       - "./:/code"
-      - "assets:/code/jarbas/frontend/static"
+      - "staticfiles:/code/jarbas/frontend/static"
     command: [npm, run, watch]
+
   nginx:
     build:
       context: .
       dockerfile: Dockerfile-nginx
     volumes:
-      - "assets:/opt/jarbas/staticfiles"
+      - "staticfiles:/opt/jarbas/staticfiles"
     ports:
       - "8000:80"
     depends_on:
@@ -59,8 +61,6 @@ services:
     image: memcached:1.4
 
 volumes:
-  assets:
-    external: false
   staticfiles:
     external: false
   db:
