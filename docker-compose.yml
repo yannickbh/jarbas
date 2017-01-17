@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: Dockerfile-nginx
     volumes:
-      - "staticfiles:/opt/jarbas/staticfiles"
+      - "staticfiles:/code/jarbas/staticfiles"
     ports:
       - "8000:80"
     depends_on:
