@@ -168,7 +168,7 @@ docker-compose run --rm jarbas python manage.py companies contrib/sample-data/co
 docker-compose run --rm jarbas python manage.py irregularities contrib/sample-data/irregularities_sample.xz
 ```
 
-You can get the datasets running [Rosie](https://github.com/datasciencebr/rosie) or directly with the [toolbox](https://github.com/datasciencebr/rosie).
+This load sample data — **not** the full datasets — just to make it easy for you to get started. Alternatively you can get the full datasets running [Rosie](https://github.com/datasciencebr/rosie) or with the [toolbox](https://github.com/datasciencebr/serenata-toolbox).
 
 
 ### Local install
@@ -228,17 +228,17 @@ $ python manage.py migrate
 
 #### Load data
 
-Now you can load the data from our datasets and get some other data as static files:
+Now you can load the data from our datasets and get some other data as static files.
+
+This load sample data — **not** the full datasets — just to make it easy for you to get started:
 
 ```
-$ python manage.py reimbursements <path to reimbursements.xz>
-$ python manage.py irregularities <path to irregularities.xz file>
-$ python manage.py companies <path to companies.xz>
-$ python manage.py ceapdatasets
+python manage.py reimbursements contrib/sample-data/reimbursements_sample.xz
+python manage.py companies contrib/sample-data/companies_sample.xz
+python manage.py irregularities contrib/sample-data/irregularities_sample.xz
 ```
 
-You can get the datasets running [Rosie](https://github.com/datasciencebr/rosie) or directly with the [toolbox](https://github.com/datasciencebr/rosie).
-
+Alternatively you can get the full datasets running [Rosie](https://github.com/datasciencebr/rosie) or with the [toolbox](https://github.com/datasciencebr/serenata-toolbox).
 #### Generate static files
 
 We generate assets through NodeJS, so run it before Django collecting static files:
