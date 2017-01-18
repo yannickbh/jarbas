@@ -6,18 +6,19 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-       - "staticfiles:/code/staticfiles"
-       - "./:/code"
+      - "staticfiles:/code/staticfiles"
+      - "assets:/code/jarbas/frontend/static"
+      - "./:/code"
     environment:
-       - SECRET_KEY=lets-rock
-       - DATABASE_URL=postgres://jarbas:mysecretpassword@db/jarbas
-       - CACHE_BACKEND=django.core.cache.backends.memcached.MemcachedCache
-       - CACHE_LOCATION=cache:11211
-       - DEBUG=True
+      - SECRET_KEY=lets-rock
+      - DATABASE_URL=postgres://jarbas:mysecretpassword@db/jarbas
+      - CACHE_BACKEND=django.core.cache.backends.memcached.MemcachedCache
+      - CACHE_LOCATION=cache:11211
+      - DEBUG=True
     depends_on:
-       - elm
-       - db
-       - cache
+      - elm
+      - db
+      - cache
     networks:
       backend:
       frontend:
@@ -30,7 +31,7 @@ services:
       dockerfile: Dockerfile-elm
     volumes:
       - "./:/code"
-      - "staticfiles:/code/jarbas/frontend/static"
+      - "assets:/code/jarbas/frontend/static"
       - "/code/node_modules"
     command: [yarn, watch]
 
@@ -62,6 +63,8 @@ services:
     image: memcached:1.4
 
 volumes:
+  assets:
+    external: false
   staticfiles:
     external: false
   db:
