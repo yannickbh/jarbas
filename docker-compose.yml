@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - "staticfiles:/code/staticfiles"
       - "./:/code"
+      - "staticfiles:/code/staticfiles"
     environment:
       - SECRET_KEY=lets-rock
       - DATABASE_URL=postgres://jarbas:mysecretpassword@db/jarbas
@@ -62,8 +62,6 @@ services:
     image: memcached:1.4
 
 volumes:
-  assets:
-    external: false
   staticfiles:
     external: false
   db:
