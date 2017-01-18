@@ -8,6 +8,7 @@ services:
     volumes:
       - "./:/code"
       - "staticfiles:/code/staticfiles"
+      - "assets:/code/jarbas/frontend/static"
     environment:
       - SECRET_KEY=lets-rock
       - DATABASE_URL=postgres://jarbas:mysecretpassword@db/jarbas
@@ -31,7 +32,7 @@ services:
     volumes:
       - "./:/code"
       - "/code/node_modules"
-      - "staticfiles:/code/jarbas/frontend/static"
+      - "assets:/code/jarbas/frontend/static"
     command: [yarn, watch]
 
   nginx:
@@ -62,6 +63,8 @@ services:
     image: memcached:1.4
 
 volumes:
+  assets:
+    external: false
   staticfiles:
     external: false
   db:
