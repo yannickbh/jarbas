@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "staticfiles:/code/staticfiles"
-      - "assets:/code/jarbas/frontend/static"
       - "./:/code"
     environment:
       - SECRET_KEY=lets-rock
@@ -31,8 +30,8 @@ services:
       dockerfile: Dockerfile-elm
     volumes:
       - "./:/code"
-      - "assets:/code/jarbas/frontend/static"
       - "/code/node_modules"
+      - "staticfiles:/code/jarbas/frontend/static"
     command: [yarn, watch]
 
   nginx:
@@ -40,7 +39,7 @@ services:
       context: .
       dockerfile: Dockerfile-nginx
     volumes:
-      - "staticfiles:/code/jarbas/staticfiles"
+      - "staticfiles:/code/staticfiles"
     ports:
       - "8000:80"
     depends_on:
